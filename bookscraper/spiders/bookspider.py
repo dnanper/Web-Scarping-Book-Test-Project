@@ -12,6 +12,16 @@ class BookspiderSpider(scrapy.Spider):
     allowed_domains = ["books.toscrape.com"]
     start_urls = ["https://books.toscrape.com"]
 
+    # Can modify default in here instead of in settings file
+    custom_settings = {
+        'FEEDS': {
+            'book_data.json': {
+                'format': 'json',
+                'overwrite': True
+            }
+        }
+    }
+
     # this function automatically run first
     # the response for function PARSE is start_urls
     def parse(self, response):
@@ -70,6 +80,8 @@ class BookspiderSpider(scrapy.Spider):
 # to run spider: 'scrapy crawl bookspider' (name = bookspider)
 # to run spider and save data in file:
     # scrapy crawl bookspider -o file_name.json/.csv/....
+
+# if already set default: FEED in settings, then use: scrapy crawl bookspider
 
 ### we can practice (test) with the HTML with ipython with:
 #           SCRAPY SHELL.
