@@ -1,3 +1,5 @@
+import random
+
 import scrapy
 from bookscraper.items import BookItem
 
@@ -22,6 +24,16 @@ class BookspiderSpider(scrapy.Spider):
         }
     }
 
+    # Create list of User-agent and rotately using each of it in order to avoid ban from website
+    # Or we can use a middlewares contains thousands of fake user id, instead of 5. This call API
+    # user_agent_list = [
+    #     "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1",
+    #     "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML like Gecko) Chrome/28.0.1469.0 Safari/537.36",
+    #     "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML like Gecko) Chrome/28.0.1469.0 Safari/537.36",
+    #     "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36",
+    #     "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.67 Safari/537.36"
+    # ]
+
     # this function automatically run first
     # the response for function PARSE is start_urls
     def parse(self, response):
@@ -37,6 +49,8 @@ class BookspiderSpider(scrapy.Spider):
             # this is not recursion, just a function call part:
             #   call the parse_book_detail function again for each book
             yield response.follow(detail_page_url, callback=self.parse_book_detail)
+            # above(headers): randomly use different user-agent
+
             # yield {
             #     'name' : book.css('h3 a::text').get(),
             #     'price' : book.css('div.product_price p.price_color::text').get(),
@@ -53,7 +67,6 @@ class BookspiderSpider(scrapy.Spider):
 
             #recursion part
             yield response.follow(next_page_url, callback=self.parse)
-
     # parse book detail function
     # now this function only work in the book detail page
     # the response for PARSE_BOOK_DETAIL is detail_page_url
