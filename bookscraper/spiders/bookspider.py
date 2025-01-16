@@ -7,6 +7,22 @@ from bookscraper.items import BookItem
 # After finish the code_block call by Yield, compyler continues run the previous code_block
 # Like BL in Kien Truc May Tinh
 
+##### PROXY
+# Unlike browser headers, ID is identical address for each computer. This ID is for computer to gain back the
+# information having requested from website
+# So that, even though we change browser headers each time request, the ADMIN WEBSITE can block us using
+# ID (Cause each computer only has one ID)
+# => to prevent that case, use ROTATING PROXY:
+    # Use ID from Free Proxy List, which contains many ID from big City so almost Websites ignore those ID
+        # Very Low, beacause they are free so many people use them -> Not Good
+        # May not work
+        # Must to change oftenly
+        # Use middleware and pip install some libraries
+    # Smart Proxy: Paid (Money)
+    # Proxy API: ScrapeOps
+        # Paid
+        # Don't even need Browser Header /User-Agent anymore
+
 class BookspiderSpider(scrapy.Spider):
     name = "bookspider"
 
@@ -24,6 +40,7 @@ class BookspiderSpider(scrapy.Spider):
         }
     }
 
+    ### USER-AGENT / BROWSER HEADERS
     # Create list of User-agent and rotately using each of it in order to avoid ban from website
     # Or we can use a middlewares contains thousands of fake user id, instead of 5. This call API
     # user_agent_list = [

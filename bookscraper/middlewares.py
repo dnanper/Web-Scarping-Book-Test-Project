@@ -160,6 +160,8 @@ class ScrapeOpsFakeBrowserHeaderAgentMiddleware:
     def from_crawler(cls, crawler):
         return cls(crawler.settings)
 
+    # Khởi tạo middleware với các tham số cần thiết
+    # Giống constructor
     def __init__(self, settings):
         self.scrapeops_api_key = settings.get('SCRAPEOPS_API_KEY')
         self.scrapeops_endpoint = settings.get('SCRAPEOPS_FAKE_BROWSER_HEADER_ENDPOINT',
@@ -182,12 +184,14 @@ class ScrapeOpsFakeBrowserHeaderAgentMiddleware:
         random_index = randint(0, len(self.headers_list) - 1)
         return self.headers_list[random_index]
 
+    # Kiểm tra xem tính năng Fake Browser Headers có được kích hoạt hay không.
     def _scrapeops_fake_browser_headers_enabled(self):
         if self.scrapeops_api_key is None or self.scrapeops_api_key == '' or self.scrapeops_fake_browser_headers_active == False:
             self.scrapeops_fake_browser_headers_active = False
         else:
             self.scrapeops_fake_browser_headers_active = True
 
+    #Xử lý mỗi yêu cầu HTTP (request) trước khi gửi đi: Gắn từng header lấy được vào đối tượng request.headers
     def process_request(self, request, spider):
         if self.scrapeops_fake_browser_headers_active:
             random_browser_header = self._get_random_browser_header()
