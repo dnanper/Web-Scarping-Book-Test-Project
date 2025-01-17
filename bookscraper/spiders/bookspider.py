@@ -23,6 +23,18 @@ from bookscraper.items import BookItem
         # Paid
         # Don't even need Browser Header /User-Agent anymore
 
+##### USING CLOUD TO RUN SPIDER
+# Websites usually change their data, so that we must update the page data, for example: run again every day,
+# every week, ....
+# To automatically do that, we can schedule spider in CLOUD, and it will auto run spider every certain time
+
+# SCRAPYD: free and open source, has many libraries to use,
+#   BUT: need my own sever computer, the config is complicated, ...
+# SCRAPEOPS: free, easy to use and set up,
+#   BUT: need my own sever
+# SCRAPY CLOUD: have it own sever, good combine with many tools, easiest to set up and use,
+#   BUT: Paid
+
 class BookspiderSpider(scrapy.Spider):
     name = "bookspider"
 
